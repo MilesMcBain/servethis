@@ -1,0 +1,22 @@
+#! /bin/bash
+if [ -z "$1" ]; then
+    SERVR_PORT=8000
+else
+    SERVER_PORT=$1       
+fi
+
+if [ -x "$(command -v python3)" ]; then
+    python3 -m http.server $SERVER_PORT
+else
+    if [ -x "$(command -v python)" ]; then
+       PYTHON_V="$(python --version)"
+       if [$PYTHON_V ~= ^2.* ]; then
+           python -m SimpleHTTPServer $SERVER_PORT
+       else
+           python -m http.server $SERVER_PORT
+       fi
+    else
+        echo "python or python3 not found. Install python to servethis."
+    fi
+fi
+
